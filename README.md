@@ -11,7 +11,7 @@ This collector reads the public JSON endpoints queried by the live map interface
 
 ## Features
 
-- 🔗 **Plugin Event Support**: Detects events where `source` is `"plugin"`, maps `source` to `discord`, and extracts player names from fields like `author_name`, `author.username`, `displayName`, etc.
+- 🔗 **Supports plugins that output `source="plugin"`, such as Discord Bridge.**: Detects events where `source` is `"plugin"`, maps `source` to `discord`, and extracts player names from fields like `author_name`, `author.username`, `displayName`, etc.
 - 📁 **Auto-Creation of Configuration**: Generates a default `config.json` configuration template at startup if none is found.
 - 📡 **CLI Override Hierarchy**: Easily override any settings in your configuration file using command-line arguments (CLI overrides config file, which overrides generic defaults).
 - 📍 **Live Coordinate & Status Tracking**: Caches the latest public player information and supplements events with coordinates, health, and armor values.
