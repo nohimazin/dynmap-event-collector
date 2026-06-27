@@ -1,5 +1,8 @@
-[日本語版README](/README_JP.md)
+<div style="text-align: center;">
+   
+[日本語](./README_JP.md)
 
+</div>
 
 
 # Dynmap / LiveAtlas Public Event Collector
