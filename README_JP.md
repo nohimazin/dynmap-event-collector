@@ -1,8 +1,6 @@
-<div style="text-align: center;">
-   
+<p align="center">
 [English](./README.md)
-
-</div>
+</p>
 
 
 # Dynmap / LiveAtlas 公開イベントコレクター
@@ -21,11 +19,12 @@
 - 📍 **現在座標およびステータスの自動補完**: 最新の公開プレイヤー情報をキャッシュし、イベントへ座標・体力・防具値を補完します。
 - 🔌 **入退出イベントの推論モード**: プラグインがネイティブの参加/退出イベントを配信しない場合、オンラインプレイヤーリストの差分を比較して参加/退出（`inferred`）を推論してログに記録できます。
 - 🖥️ **詳細表示 (Verbose) モード**: 収集したイベントをリアルタイムにフォーマットし、標準エラー出力 (`sys.stderr`) へ出力します。
-- 🔗 **Discord Bridge サポート**: Discord Bridge プラグインからのイベントを検知し、`source` を `discord` にマッピング、`author_name`、`author.username`、`displayName` 等からプレイヤー名を取得します。
+- 🔗 **Discord Bridge / プラグイン イベントサポート**: Discord Bridge プラグインからのイベントを検知し、`source` を `discord` にマッピング、`author_name`、`author.username`、`displayName` 等からプレイヤー名を取得します。
 - 🎯 **プレイヤー名抽出**: 複数フィールド（`player`、`playerName`、`account`、`author_name`、`author.username`、`displayName` 等）から名前を取得し、様々なソースに対応します。
-- 📸 **スナップショット機能**: `--snapshot` オプションで初回取得時のプレイヤー一覧と生データを `JSONL` に保存します（CSV には保存しません）。
-- 🛑 **Ctrl+C による安全な終了**: `Ctrl+C` でスクリプトが停止します。状態ファイルは定期的に更新されているため、次回起動時に最新の保存状態がロードされます。
+- 📸 **スナップショット機能**: `--snapshot` オプションで初回取得時のプレイヤー一覧と完全なアップデートペイロードを `JSONL` に保存します（CSV には保存しません）。
+- 🛑 **Ctrl+C による安全な終了**: `Ctrl+C` でスクリプトが停止します。状態ファイルは各ポーリング成功時に更新されるため、次回起動時は最後に取得できた更新位置から再開されます。
 - 🔄 **自動リトライ**: ネットワークや JSON パースエラーが発生した場合、指数バックオフで自動的に再試行します。
+- ▶ 再開サポート: ポーリング成功時に状態ファイルが更新され、Ctrl+C で安全に終了できます。
 
 ---
 
@@ -52,6 +51,18 @@
    ```
 
 ---
+## プロジェクト構成
+
+```text
+dynmap-public-collector/
+├── dynmap_collector.py
+├── config.json
+├── outputs/
+│   ├── dynmap_events.jsonl
+│   ├── dynmap_events.csv
+│   └── dynmap_state.json
+└── README.md
+```
 
 ## 設定ファイル項目定義 (`config.json`)
 
@@ -77,7 +88,7 @@
 * `base` (string): Dynmap/LiveAtlas の公開アップデートベース URL。
 * `world` (string): 取得対象のワールド名 (例: `world`, `world_nether`)。`null` の場合はサーバー既定のデフォルトワールドが自動設定されます。
 * `interval` (float): ポーリング間隔（秒）。`null` の場合はサーバー設定の `updaterate` から自動計算されます（最小値は `1.0` 秒）。
-* `duration` (float): 指定された時間（秒）が経過するとスクリプトを終了します。`0` を指定すると永続的に動作します。
+* `duration` (float): 指定された時間（秒）が経過するとスクリプトを終了します。0 または未指定の場合は継続して実行します。
 * `timeout` (float): HTTP リクエストの接続タイムアウト時間。
 * `jsonl_output` (string/Path): JSONL ログの出力パス。
 * `csv_output` (string/Path): CSV ログの出力パス。
@@ -124,6 +135,7 @@ python dynmap_collector.py --interval 2.5 --verbose
 * `message`: 発言内容。
 * `world`, `x`, `y`, `z`: 座標および次元情報 (キャッシュから自動補完)。
 * `health`, `armor`: イベント発生時のプレイヤーの体力と防具値。
+collected_at,event_time,timestamp,type,source,player,message,world,x,y,z,health,armor
 
 ### JSONL スキーマ
 JSONL ファイルに保存されるデータ構造も同様のフラットな構造です。`"raw"` キーにノーマライズされる前の元の生の JSON オブジェクトがそのまま保存されています。

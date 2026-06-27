@@ -1,8 +1,6 @@
-<div style="text-align: center;">
-   
+<p align="center">
 [日本語](./README_JP.md)
-
-</div>
+</p>
 
 
 # Dynmap / LiveAtlas Public Event Collector
@@ -23,7 +21,7 @@ This collector reads the public JSON endpoints queried by the live map interface
 - 🖥️ **Verbose Output**: Formats and logs collected events to `sys.stderr` in real-time.
 - 🎯 **Player Name Extraction**: Attempts to obtain the player name from multiple fields (`player`, `playerName`, `account`, `author_name`, `author.username`, `displayName`, etc.) to support various source formats.
 - 📸 **Snapshot Handling**: When `--snapshot` is enabled, the initial player list, the raw JSON payload, and the timestamp are saved as a snapshot event to the JSONL output (CSV is not used).
-- 🛑 **Graceful Shutdown**: Pressing **Ctrl+C** stops the script; the state file is updated after each successful poll, so the most recent saved state will be loaded on the next start.
+- 🛑 **Graceful Shutdown**: Pressing **Ctrl+C** stops the script. The state file is updated after each successful poll, so on the next start the collector resumes from the last saved position.
 - 🔄 **Automatic Retry**: Network and JSON parsing errors are automatically retried with exponential backoff for robustness.
 
 ---
