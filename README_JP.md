@@ -1,3 +1,10 @@
+<div style="text-align: center;">
+   
+[English](./README.md)
+
+</div>
+
+
 # Dynmap / LiveAtlas 公開イベントコレクター
 
 本ツールは、公開されている Dynmap または LiveAtlas のアップデート用 JSON エンドポイントを定期的にポーリングし、サーバーのイベントログ（チャットメッセージ、プレイヤーの参加・退出など）を構造化された JSONL および CSV 形式で保存する、軽量かつ自己完結型の Python スクリプトです。

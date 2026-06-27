@@ -1,3 +1,10 @@
+<div style="text-align: center;">
+   
+[日本語](./README_JP.md)
+
+</div>
+
+
 # Dynmap / LiveAtlas Public Event Collector
 
 A lightweight, configurable, dependency-free Python tool to poll and save public Dynmap or LiveAtlas event logs (chat messages, player join/quit updates) into structured JSONL and CSV formats. 
