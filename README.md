@@ -11,12 +11,12 @@ This collector reads the public JSON endpoints queried by the live map interface
 - 🔗 **Discord Bridge Support**: Detects events from Discord Bridge plugins, mapping `source` to `discord` and extracting player names from fields like `author_name`, `author.username`, `displayName`, etc.
 - 📁 **Auto-Creation of Configuration**: Generates a default `config.json` configuration template at startup if none is found.
 - 📡 **CLI Override Hierarchy**: Easily override any settings in your configuration file using command-line arguments (CLI overrides config file, which overrides generic defaults).
-- 📍 **Live Coordinate & Status Tracking**: Caches online player states (coordinates `x`, `y`, `z`, active dimension/world, health, and armor) to append location details and status to chat messages.
+- 📍 **Live Coordinate & Status Tracking**: Caches the latest public player information and supplements events with coordinates, health, and armor values.
 - 🔌 **Join/Quit Inference**: Optionally tracks differences in the online player list to infer player join/quit events when the plugin doesn't broadcast native updates.
 - 🖥️ **Verbose Output**: Formats and logs collected events to `sys.stderr` in real-time.
 - 🎯 **Player Name Extraction**: Attempts to obtain the player name from multiple fields (`player`, `playerName`, `account`, `author_name`, `author.username`, `displayName`, etc.) to support various source formats.
-- 📸 **Snapshot Handling**: When `--snapshot` is enabled, the initial player list is saved **only to the JSONL output** (not CSV).
-- 🛑 **Graceful Shutdown**: Pressing **Ctrl+C** stops the script; the state file is updated regularly, so the most recent saved state will be loaded on the next start.
+- 📸 **Snapshot Handling**: When `--snapshot` is enabled, the initial player list, the raw JSON payload, and the timestamp are saved as a snapshot event to the JSONL output (CSV is not used).
+- 🛑 **Graceful Shutdown**: Pressing **Ctrl+C** stops the script; the state file is updated after each successful poll, so the most recent saved state will be loaded on the next start.
 - 🔄 **Automatic Retry**: Network and JSON parsing errors are automatically retried with exponential backoff for robustness.
 
 ---
