@@ -23,6 +23,10 @@ This collector reads the public JSON endpoints queried by the live map interface
 - 🔄 **Automatic Retry**: Network and JSON parsing errors are automatically retried with exponential backoff for robustness.
 
 ---
+## System Requirements
+
+- Python **3.9 or later**
+- Standard library only (no additional dependencies)
 
 ## Quick Start
 
