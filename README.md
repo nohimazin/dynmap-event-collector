@@ -82,6 +82,18 @@ The default configuration file looks like this:
   "verbose": false,
   "user_agent": "dynmap-public-collector/1.0"
 }
+
+### Timezone Offset
+
+- `timezone_offset` (integer): Hours offset from UTC for timestamps. Default is `0` (UTC). Can be set in `config.json` or overridden via `--timezone-offset` command‑line argument.
+- Example in `config.json`:
+```json
+  "timezone_offset": 9
+```
+- CLI example:
+```bash
+python dynmap_collector.py --timezone-offset 9
+```
 ```
 
 ### Key Reference

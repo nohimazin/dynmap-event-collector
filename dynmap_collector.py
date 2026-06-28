@@ -5,9 +5,10 @@ import csv
 import json
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
+TARGET_TZ = timezone.utc
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -44,7 +45,7 @@ def fetch_json(url: str, timeout: float = 15.0, user_agent: str = "dynmap-public
 
 
 def now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(TARGET_TZ).isoformat()
 
 
 def timestamp_to_iso(timestamp: Any) -> str:
@@ -56,7 +57,7 @@ def timestamp_to_iso(timestamp: Any) -> str:
         return ""
     if value > 10_000_000_000:
         value /= 1000.0
-    return datetime.fromtimestamp(value, timezone.utc).isoformat()
+    return datetime.fromtimestamp(value, timezone.utc).astimezone(TARGET_TZ).isoformat()
 
 
 def normalize_event(
@@ -467,6 +468,7 @@ def load_config(config_path: Path) -> dict[str, Any]:
             "infer_player_events": False,
             "verbose": False,
             "user_agent": "dynmap-public-collector/1.0",
+            "timezone_offset": 0,
         }
         try:
             config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -519,6 +521,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--verbose", action="store_true", default=None, help="Print collected events to stderr")
     parser.add_argument("--user-agent", default=None, help="HTTP User-Agent header")
+    parser.add_argument("--timezone-offset", type=int, default=None, help="Hours offset from UTC for timestamps")
 
     args = parser.parse_args()
 
@@ -543,6 +546,7 @@ def parse_args() -> argparse.Namespace:
         "infer_player_events": False,
         "verbose": False,
         "user_agent": "dynmap-public-collector/1.0",
+        "timezone_offset": 0,
     }
 
     resolved = argparse.Namespace()
@@ -569,6 +573,8 @@ def parse_args() -> argparse.Namespace:
         print("Error: --base URL must be specified either in the config file or as a command line argument.", file=sys.stderr)
         sys.exit(1)
 
+    global TARGET_TZ
+    TARGET_TZ = timezone(timedelta(hours=resolved.timezone_offset or 0))
     return resolved
 
 

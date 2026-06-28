@@ -96,6 +96,20 @@ dynmap-public-collector/
 }
 ```
 
+### タイムゾーンオフセット
+
+- `timezone_offset` (整数): UTC からの時間オフセット（時間単位）。デフォルトは `0`（UTC）。`config.json` で設定するか、`--timezone-offset` コマンドライン引数で上書きできます。
+
+  設定例（`config.json`）:
+  ```json
+  "timezone_offset": 9
+  ```
+
+  CLI 例:
+  ```bash
+  python dynmap_collector.py --timezone-offset 9
+  ```
+
 ### 各項目の詳細
 * `base` (string): Dynmap/LiveAtlas の公開アップデートベース URL。
 * `world` (string): 取得対象のワールド名 (例: `world`, `world_nether`)。`null` の場合はサーバー既定のデフォルトワールドが自動設定されます。
