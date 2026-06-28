@@ -45,6 +45,14 @@
 
 2. **接続先 Dynmap/LiveAtlas サーバーを設定する**:
    生成された `config.json` を開き、対象サーバーの公開 URL（例: `https://dynmap.example.com` など）を `"base"` に設定します。
+
+   初回生成時は `base` は `null` に設定されています。
+   Dynmap / LiveAtlas の公開URLを設定する際は、JSONの文字列としてダブルクォーテーション (`"`) で囲んでください。
+
+```json
+{
+  "base": "https://dynmap.example.com"
+}
    
    あるいは、コマンドラインから直接指定して起動することも可能です:
    ```bash

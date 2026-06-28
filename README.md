@@ -45,6 +45,13 @@ This collector reads the public JSON endpoints queried by the live map interface
 
 2. **Configure your target Dynmap/LiveAtlas Server**:
    Open the generated `config.json` and set the `"base"` URL of your target server (e.g. `https://dynmap.example.com` or a custom proxy base).
+   When first generated, `base` is set to `null`.
+   When setting the public URL for Dynmap or LiveAtlas, please enclose it in double quotes (`"`) as a JSON string.
+
+```json
+{
+"base": "https://dynmap.example.com"
+}
    
    Alternatively, specify it directly via the CLI:
    ```bash
