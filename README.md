@@ -43,22 +43,25 @@ This collector reads the public JSON endpoints queried by the live map interface
    Error: --base URL must be specified either in the config file or as a command line argument.
    ```
 
-2. **Configure your target Dynmap/LiveAtlas Server**:
-   Open the generated `config.json` and set the `"base"` URL of your target server (e.g. `https://dynmap.example.com` or a custom proxy base).
-   When first generated, `base` is set to `null`.
-   When setting the public URL for Dynmap or LiveAtlas, please enclose it in double quotes (`"`) as a JSON string.
+2. **Configure the target Dynmap/LiveAtlas server**:
+
+Open the generated `config.json` file and set the target server's public URL (e.g., `https://dynmap.example.com`) for the `base` parameter. 
+
+By default, `base` is set to `null` upon initial generation. 
+
+When setting the Dynmap/LiveAtlas public URL, ensure it is enclosed in double quotes (`"`) as a JSON string.
 
 ```json
 {
 "base": "https://dynmap.example.com"
 }
-   
-   Alternatively, specify it directly via the CLI:
-   ```bash
-   python dynmap_collector.py --base https://dynmap.example.com --verbose --duration 10
-   ```
+```
 
-**Note:** After the initial `config.json` is created, if the `base` URL is not set, the script will exit with an error. Please set `base` and rerun.
+Alternatively, you can specify the URL directly via the command line when launching the program.
+
+```bash
+python dynmap_collector.py --base https://dynmap.example.com --verbose --duration 10
+```
 ---
 
 ## Configuration (`config.json`)
